@@ -32,7 +32,6 @@ public class ResultWindow extends JFrame {
 
 		pack();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
 

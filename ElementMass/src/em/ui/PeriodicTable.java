@@ -18,9 +18,6 @@ import em.Element;
 public class PeriodicTable {
 	public List<ElementButton> buttonList;
 	public JPanel panel;
-
-	public PeriodicTable() {
-	}
 	
 	private void addElementButton(Element e) {
 		ElementButton eb = new ElementButton(e);
@@ -37,47 +34,158 @@ public class PeriodicTable {
 	public void createElementButtons(JPanel panel) {
 		buttonList = new LinkedList<ElementButton>();
 		this.panel = panel;
-	
-		addElementButton(new Element("H", 1));
+
+		Element h = new Element("H", 1);
+		h.addIsotopes(1, 2);
+		addElementButton(h);
 		addEmptyLabels(16);
-		addElementButton(new Element("He", 2));
-		addElementButton(new Element("Li", 3));
-		addElementButton(new Element("Be", 4));
+		
+		Element he = new Element("He", 2);
+		he.addIsotopes(3, 4);
+		addElementButton(he);
+		
+		Element li = new Element("Li", 3);
+		li.addIsotopes(6, 7);
+		addElementButton(li);
+		
+		Element be = new Element("Be", 4);
+		be.addIsotopes(9);
+		addElementButton(be);
 		addEmptyLabels(10);
-		addElementButton(new Element("B", 5));
-		addElementButton(new Element("C", 6));
-		addElementButton(new Element("N", 7));
-		addElementButton(new Element("O", 8));
-		addElementButton(new Element("F", 9));
-		addElementButton(new Element("Ne", 10));
-		addElementButton(new Element("Na", 11));
-		addElementButton(new Element("Mg", 12));
+		
+		Element b = new Element("B", 5);
+		b.addIsotopes(10, 11);
+		addElementButton(b);
+		
+		Element c = new Element("C", 6);
+		c.addIsotopes(12, 13);
+		addElementButton(c);
+		
+		Element n = new Element("N", 7);
+		c.addIsotopes(14, 15);
+		addElementButton(n);
+		
+		Element o = new Element("O", 8);
+		o.addIsotopes(16, 17, 18);
+		addElementButton(o);
+		
+		Element f = new Element("F", 9);
+		f.addIsotopes(19);
+		addElementButton(f);
+		
+		Element ne = new Element("Ne", 10);
+		ne.addIsotopes(20, 21, 22);
+		addElementButton(ne);
+		
+		Element na = new Element("Na", 11);
+		na.addIsotopes(23);
+		addElementButton(na);
+		
+		Element mg = new Element("Mg", 12);
+		mg.addIsotopes(24, 25, 26);
+		addElementButton(mg);
 		addEmptyLabels(10);
-		addElementButton(new Element("Al", 13));
-		addElementButton(new Element("Si", 14));
-		addElementButton(new Element("P", 15));
-		addElementButton(new Element("S", 16));
-		addElementButton(new Element("Cl", 17));
-		addElementButton(new Element("Ar", 18));
-		addElementButton(new Element("K", 19));
-		addElementButton(new Element("Ca", 20));
-		addElementButton(new Element("Sc", 21));
-		addElementButton(new Element("Ti", 22));
-		addElementButton(new Element("V", 23));
-		addElementButton(new Element("Cr", 24));
-		addElementButton(new Element("Mn", 25));
-		addElementButton(new Element("Fe", 26));
-		addElementButton(new Element("Co", 27));
-		addElementButton(new Element("Ni", 28));
-		addElementButton(new Element("Cu", 29));
-		addElementButton(new Element("Zn", 30));
-		addElementButton(new Element("Ga", 31));
-		addElementButton(new Element("Ge", 32));
-		addElementButton(new Element("As", 33));
-		addElementButton(new Element("Se", 34));
-		addElementButton(new Element("Br", 35));
-		addElementButton(new Element("Kr", 36));
-		addElementButton(new Element("Rb", 37));
+		
+		Element al = new Element("Al", 13);
+		al.addIsotopes(27);
+		addElementButton(al);
+		
+		Element si = new Element("Si", 14);
+		si.addIsotopes(28, 29, 30);
+		addElementButton(si);
+		
+		Element p = new Element("P", 15);
+		p.addIsotopes(31);
+		addElementButton(p);
+		
+		Element s = new Element("S", 16);
+		s.addIsotopes(32, 33, 34, 36);
+		addElementButton(s);
+		
+		Element cl = new Element("Cl", 17);
+		cl.addIsotopes(35, 37);
+		addElementButton(cl);
+		
+		Element ar = new Element("Ar", 18);
+		ar.addIsotopes(36, 38, 40);
+		addElementButton(ar);
+		
+		Element k = new Element("K", 19);
+		k.addIsotopes(39, 40, 41);
+		addElementButton(k);
+		
+		Element ca = new Element("Ca", 20);
+		ca.addIsotopes(40, 42, 43, 44, 46, 48);
+		addElementButton(ca);
+		
+		Element sc = new Element("Sc", 21);
+		sc.addIsotopes(45);
+		addElementButton(sc);
+		
+		Element ti = new Element("Ti", 22);
+		ti.addIsotopes(46, 47, 48, 49, 50);
+		addElementButton(ti);
+		
+		Element v = new Element("V", 23);
+		v.addIsotopes(50, 51);
+		addElementButton(v);
+		
+		Element cr = new Element("Cr", 24);
+		cr.addIsotopes(50, 52, 53, 54);
+		addElementButton(cr);
+		
+		Element mn = new Element("Mn", 25);
+		mn.addIsotopes(55);
+		addElementButton(mn);
+		
+		Element fe = new Element("Fe", 26);
+		fe.addIsotopes(54, 56, 57, 58);
+		addElementButton(fe);
+		
+		Element co = new Element("Co", 27);
+		co.addIsotopes(59);
+		addElementButton(co);
+		
+		Element ni = new Element("Ni", 28);
+		ni.addIsotopes(58, 60, 61, 62, 64);
+		addElementButton(ni);
+		
+		Element cu = new Element("Cu", 29);
+		cu.addIsotopes(63, 65);
+		addElementButton(cu);
+		
+		Element zn = new Element("Zn", 30);
+		zn.addIsotopes(64, 66, 67, 68, 70);
+		addElementButton(zn);
+		
+		Element ga = new Element("Ga", 31);
+		ga.addIsotopes(69, 71);
+		addElementButton(ga);
+		
+		Element ge = new Element("Ge", 32);
+		ge.addIsotopes(70, 72, 73, 74, 76);
+		addElementButton(ge);
+		
+		Element as = new Element("As", 33);
+		as.addIsotopes(75);
+		addElementButton(as);
+		
+		Element se = new Element("Se", 34);
+		se.addIsotopes(74, 76, 77, 78, 80, 82);
+		addElementButton(se);
+		
+		Element br = new Element("Br", 35);
+		br.addIsotopes(79, 81);
+		addElementButton(br);
+		
+		Element kr = new Element("Kr", 36);
+		kr.addIsotopes(79, 80, 82, 83, 84, 86);
+		addElementButton(kr);
+		
+		Element rb = new Element("Rb", 37);
+		rb.addIsotopes(85, 87);
+		addElementButton(rb);
+		
 		addElementButton(new Element("Sr", 38));
 		addElementButton(new Element("Y", 39));
 		addElementButton(new Element("Zr", 40));
