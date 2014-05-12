@@ -1,4 +1,4 @@
-package em.test;
+package em;
 
 import static org.junit.Assert.*;
 import em.Element;
@@ -20,6 +20,12 @@ public class ElementTest {
 	public void addThreeIsotopes() {
 		e.addIsotopes(2, 3, 4);
 		assertTrue(e.getIsotopes().contains(new Isotope(2)));
+	}
+	
+	@Test
+	public void testMostFrequentIsotope() {
+		e.addMostFrequentIsotope(5);
+		assertTrue(e.getMostFrequentIsotope().equals(new Isotope(5)));
 	}
 
 }

@@ -32,6 +32,7 @@ public class Main extends JFrame implements ActionListener {
 	private Set<Element> selectedElements;
 	private PeriodicTable periodicTable = new PeriodicTable();
 	public JPanel panel;
+	private JTextField mByCField = new JTextField();
 	private Calculator calc;
 	private ResultWindow resultWindow;
 
@@ -53,7 +54,7 @@ public class Main extends JFrame implements ActionListener {
 		
 		periodicTable.addEmptyLabels(1);
 		panel.add(new JLabel("M/C"));
-		panel.add(new JTextField());
+		panel.add(mByCField);
 	
 		JButton button = new JButton("Run");
 		button.addActionListener(this);
@@ -121,6 +122,8 @@ public class Main extends JFrame implements ActionListener {
 				}
 			}
 			calc.setSelectedElements(elementList);
+			calc.setmByC(Double.parseDouble(mByCField.getText()));
+			calc.elementsInMass();
 			resultWindow.update();
 		}
 	}

@@ -15,6 +15,7 @@ public class Element {
 	private int number;
 	private String name;
 	private List<Isotope> isotopes= new LinkedList<Isotope>();
+	private Isotope mostFrequentIsotope;
 
 	public Element(String name, int mass) {
 		this.setName(name);
@@ -70,6 +71,15 @@ public class Element {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void addMostFrequentIsotope(int isotopeMass) {
+		mostFrequentIsotope = new Isotope(isotopeMass);
+		isotopes.add(mostFrequentIsotope);
+	}
+
+	public Isotope getMostFrequentIsotope() {
+		return this.mostFrequentIsotope;
 	}
 
 }

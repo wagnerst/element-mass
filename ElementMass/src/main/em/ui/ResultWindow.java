@@ -55,7 +55,7 @@ public class ResultWindow extends JFrame {
 	
 	public void update() {
 		panel.removeAll();
-		for (Element e : calc.getSelectedElements()) {
+		for (Element e : calc.getPossibleElements()) {
 			panel.add(new JLabel(e.getName()));
 		}
 		pack();
