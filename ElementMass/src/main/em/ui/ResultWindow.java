@@ -2,13 +2,13 @@ package em.ui;
 
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import em.Element;
-import em.Main;
 import em.calc.Calculator;
 
 public class ResultWindow extends JFrame {
@@ -20,7 +20,6 @@ public class ResultWindow extends JFrame {
 
 	private static final long serialVersionUID = -587902911845301729L;
 	private JPanel panel;
-	private Main main;
 	private Calculator calc;
 
 	public final void initUI() {
@@ -48,15 +47,13 @@ public class ResultWindow extends JFrame {
 	public void setCalc(Calculator calc) {
 		this.calc = calc;
 	}
-
-	public void setMain(Main appFrame) {
-		this.main = appFrame;
-	}
 	
 	public void update() {
 		panel.removeAll();
-		for (Element e : calc.getPossibleElements()) {
-			panel.add(new JLabel(e.getName()));
+		for (List<Element> l : calc.calculatePossibleElements()) {
+			for (Element e : l) {
+				panel.add(new JLabel(e.getName()));
+			}
 		}
 		pack();
 		setVisible(true);

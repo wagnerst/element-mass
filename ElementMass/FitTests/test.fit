@@ -1,16 +1,18 @@
 <html>
 	<head>
 	</head>
-	<body></body>
+	<body>
+	</body>
 </html>
 <title></title>
-<br />
 <body>
+	<p>
+		The only functionality of ElementMass is to calculate for a given M/C and selected, possible Elements, the combinations of elements in the sample.</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
 			<tr>
 				<td colspan="3" scope="row">
-					em.ElementsFixture</td>
+					fixtures.ElementsFixture</td>
 			</tr>
 			<tr>
 				<td scope="row">
@@ -22,19 +24,20 @@
 			</tr>
 			<tr>
 				<td scope="row">
-					A</td>
+					Fe, C</td>
 				<td>
-					B</td>
+					68</td>
 				<td>
-					C</td>
+					FeC, 68</td>
 			</tr>
 			<tr>
 				<td scope="row">
-					&nbsp;</td>
+					Fe, C, Ni</td>
 				<td>
-					&nbsp;</td>
+					70</td>
 				<td>
-					&nbsp;</td>
+					FeC, 68; NiC, 70</td>
 			</tr>
 		</tbody>
-	</table></body>
+	</table>
+</body>

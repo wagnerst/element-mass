@@ -3,8 +3,7 @@ package em;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -80,7 +79,6 @@ public class Main extends JFrame implements ActionListener {
                 Main appFrame = new Main("ElementMass");
                 ResultWindow resultWindow = new ResultWindow();
                 appFrame.setResultWindow(resultWindow);
-                resultWindow.setMain(appFrame);
                 resultWindow.setCalc(appFrame.getCalc());
                 appFrame.setVisible(true);
             }
@@ -115,15 +113,15 @@ public class Main extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Run")) {
-			List<Element> elementList = new LinkedList<Element>();
+			Set<Element> elements = new HashSet<Element>();
 			for (ElementButton eb : periodicTable.getButtonList()) {
 				if (eb.getSelectedObjects() != null) {
-					elementList.add(eb.getElement());
+					elements.add(eb.getElement());
 				}
 			}
-			calc.setSelectedElements(elementList);
-			calc.setmByC(Double.parseDouble(mByCField.getText()));
-			calc.elementsInMass();
+			calc.setSelectedElements(elements);
+			calc.setmByC(Integer.parseInt(mByCField.getText()));
+			//FIXME call getPossibleElements and put into resultWindow
 			resultWindow.update();
 		}
 	}

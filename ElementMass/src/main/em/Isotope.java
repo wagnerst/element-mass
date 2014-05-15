@@ -8,13 +8,15 @@ package em;
 public class Isotope {
 	
 	private int mass;
+	private Element element;
 
 	/**
 	 * @param mass
 	 */
-	public Isotope(int mass) {
+	public Isotope(Element element, int mass) {
 		super();
 		this.mass = mass;
+		this.element = element;
 	}
 
 	/**
@@ -31,6 +33,13 @@ public class Isotope {
 		this.mass = mass;
 	}
 
+	/**
+	 * @return the element
+	 */
+	public Element getElement() {
+		return element;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -41,6 +50,14 @@ public class Isotope {
 		} else {
 			return super.equals(obj);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "" + mass;
 	}
 
 }

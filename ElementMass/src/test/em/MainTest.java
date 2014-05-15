@@ -17,9 +17,9 @@ public class MainTest {
 	@Test
 	public void testElementSet() {
 		Set<Element> s = new HashSet<Element>();
-		s.add(new Element("A", 1));
-		s.add(new Element("B", 2));
-		s.add(new Element("C", 3));
+		s.add(Element.BE);
+		s.add(Element.H);
+		s.add(Element.HE);
 		m.setSelectedElements(s);
 		assertEquals(s, m.getSelectedElements());
 	}
