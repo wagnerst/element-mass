@@ -1,13 +1,13 @@
 package em.calc;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import em.Element;
 import em.Isotope;
+import em.Molecule;
 
 /**
  * This class is responsible for calculating the results
@@ -19,16 +19,21 @@ public class Calculator {
 	
 	private Set<Element> selectedElements;
 	private int mByC;
-	private Set<List<Element>> result = new HashSet<List<Element>>();
+	private Set<Molecule> result = new HashSet<Molecule>();
 
 	/**
+	 * This method explores the complete space of possible
+	 * isotope combinations from the isotopes of the elements
+	 * set as selected elements fitting in mByC.
 	 * @return the possibleElements
 	 */
-	public Set<List<Element>> calculatePossibleElements() {
-		List<Element> initial = new LinkedList<Element>();
+	public Set<Molecule> calculatePossibleElements() {
+		Molecule empty = new Molecule();
 		List<Isotope> selected = convertToFlatIsotopeList();
-		Iterator<Isotope> iterator = selected.iterator();
-		recursiveSubtract(mByC, iterator, initial);
+		for (Isotope isotope : selected) {
+			recursiveSubtract(mByC, isotope, empty);
+		}
+		System.out.println("Result: " + result);
 		return result;
 	}
 
@@ -40,71 +45,32 @@ public class Calculator {
 		return isotopes;
 	}
 
-	private List<Element> recursiveSubtract(int in, Iterator<Isotope> verticalIterator, 
-			List<Element> current) {
-		Isotope isotope = verticalIterator.next();
+	private void recursiveSubtract(int in, Isotope isotope, 
+			Molecule current) {
 		int newIn = in - isotope.getMass();
-		System.out.print("Isotope of " + isotope.getElement() + " (" 
-				+ in + " - " + isotope.getMass() + " = " + newIn + ")");
 		if (newIn > 0) {
-			List<Element> returnedCurrent = goRight(current, isotope, newIn);
-			if (verticalIterator.hasNext()) {
-				System.out.println("goDown1");
-				returnedCurrent = goDown(verticalIterator, newIn, returnedCurrent);	
-			}
-			System.out.println(" goLeft");
-			return returnedCurrent;
-			
+			subtractAllIsotopeMasses(current, isotope, newIn);	
 		} else if (newIn == 0) {
-			foundSolution(current, isotope);
-			return goLeft(current);
-		} else {
-			if (verticalIterator.hasNext()) {
-				System.out.println("goDown2");
-				return goDown(in, verticalIterator, current);
-			} else {
-				return goUp(current);
-			}
+			System.out.println("Isotope: " + isotope + " of " + isotope.getElement());
+			System.out.println("Current: " + current);
+			System.out.println("in: " + in + ", newIn: " + newIn);
+			foundSolution(current, isotope);		
 		}
 	}
 
-	private void foundSolution(List<Element> current, Isotope isotope) {
+	private void foundSolution(Molecule current, Isotope isotope) {
 		current.add(isotope.getElement());
 		result.add(current);
 	}
 
-	private List<Element> goDown(int in, Iterator<Isotope> iterator,
-			List<Element> current) {
-		System.out.println(" goDown");
-		List<Element> currentResult = recursiveSubtract(in, iterator, current);
-		return currentResult;
-	}
-
-	private List<Element> goLeft(List<Element> current) {
-		System.out.println(" goLeft");
-		return current;
-	}
-
-	private List<Element> goUp(List<Element> currentResult) {
-		System.out.println(" goUp");
-		return currentResult;
-	}
-
-	private List<Element> goDown(Iterator<Isotope> iterator, int newIn,
-			List<Element> returnedCurrent) {
-		System.out.println(" goDown");
-		List<Element> backtrackedCurrent = recursiveSubtract(newIn, iterator, returnedCurrent);
-		return backtrackedCurrent;
-	}
-
-	private List<Element> goRight(List<Element> current, Isotope isotope,
-			int newIn) {
-		System.out.println(" goRight");
+	private void subtractAllIsotopeMasses(Molecule current, Isotope isotope,
+			int rest) {
 		current.add(isotope.getElement());
 		List<Isotope> selected = convertToFlatIsotopeList();
-		Iterator<Isotope> selectedIterator = selected.iterator();
-		List<Element> returnedCurrent = recursiveSubtract(newIn, selectedIterator, current);
-		return returnedCurrent;
+		for (Isotope nextIsotope : selected) {
+			recursiveSubtract(rest, nextIsotope, current);
+		}
+		current.remove(isotope.getElement());
 	}
 
 	/**

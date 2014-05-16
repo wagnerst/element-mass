@@ -4,13 +4,13 @@
 package fixtures;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 import fit.ColumnFixture;
 
 import em.Element;
+import em.Molecule;
 import em.calc.Calculator;
 
 /**
@@ -26,31 +26,32 @@ public class ElementsFixture extends ColumnFixture {
 		Calculator calc = new Calculator();
 		calc.setmByC(parseMByC());
 		calc.setSelectedElements(parseElements());
-		Set<List<Element>> possibleElements = calc.calculatePossibleElements();
+		Set<Molecule> possibleElements = calc.calculatePossibleElements();
 		return elements2String(possibleElements);
 	}
 	
-	private String elements2String(Set<List<Element>> possibleElements) {
+	private String elements2String(Set<Molecule> possibleElements) {
 		StringBuffer buffer = new StringBuffer();
-		for (List<Element> list : possibleElements) {
+		for (Molecule molecule : possibleElements) {
 			int mass = 0;
-			for (Element e : list) {
+			for (Element e : molecule.getElements()) {
 				buffer.append(e.getName());
 				mass += e.getMostFrequentIsotope().getMass();
 			}
-			buffer.append(", " + mass + ";");
+			buffer.append(", " + mass + "; ");
 		}
-//		int lastSemicolonIndex = buffer.lastIndexOf("; ");
-//		buffer.delete(lastSemicolonIndex, lastSemicolonIndex+1);
-		return buffer.toString();
+		int lastSemicolonIndex = buffer.lastIndexOf("; ");
+		buffer.delete(lastSemicolonIndex, lastSemicolonIndex+1);
+		return buffer.toString().trim();
 	}
 
 	private Set<Element> parseElements() {
 		Set<Element> elements = new HashSet<Element>();
 		StringTokenizer st = new StringTokenizer(selectedElements, ",");
 		while (st.hasMoreTokens()) {
-			st.nextToken();
-			Element element = Element.H; //FIXME
+			String name = st.nextToken();
+			name = name.trim();
+			Element element = Element.getElementByName(name);
 			elements.add(element);
 		}
 		return elements;		

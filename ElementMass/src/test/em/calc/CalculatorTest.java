@@ -3,13 +3,14 @@ package em.calc;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import em.Element;
+import em.Molecule;
 import em.calc.Calculator;
 import static em.Element.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class CalculatorTest {
@@ -30,19 +31,38 @@ public class CalculatorTest {
 		assertTrue(2 == calc.getmByC());
 	}
 	
-	@Test
-	public void testCalculatePossibleElements() {
+	@Before
+	public void setup() {
+		elements = new HashSet<Element>();
+		calc = new Calculator();
 		elements.add(FE);
 		elements.add(C);
 		calc.setSelectedElements(elements); 
 		calc.setmByC(68);
-		Set<List<Element>> result = calc.calculatePossibleElements();
+	}
+	
+	@Test
+	public void testCalculatePossibleElementsNotEmpty() {
+		Set<Molecule> result = calc.calculatePossibleElements();
 		assertFalse(result.isEmpty());
-//		for (List<Element> l : result) {
-//			assertTrue(l.contains(FE));
-//			assertTrue(l.contains(C));
-//			assertFalse(l.contains(UUO));
-//		}
+	}
+	
+	@Test
+	public void testCalculatePossibleElementsContainsElements() {
+		Set<Molecule> result = calc.calculatePossibleElements();
+		for (Molecule m : result) {
+			assertTrue(m.contains(FE));
+			assertTrue(m.contains(C));
+			assertFalse(m.contains(UUO));
+		}
+	}
+	
+	@Test
+	public void testCalculatePossibleElementsExactly() {
+		Set<Molecule> result = calc.calculatePossibleElements();
+		for (Molecule m : result) {
+			assertTrue(m.toString().equals("CFe"));
+		}
 	}
 
 }

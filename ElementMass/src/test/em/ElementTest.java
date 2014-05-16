@@ -23,5 +23,11 @@ public class ElementTest {
 		assertTrue(elements.contains(CO));
 		assertTrue(elements.contains(UUO));
 	}
+	
+	@Test
+	public void testGetElementByName() {
+		Element fe = Element.getElementByName("Fe");
+		assertTrue(fe.equals(FE));
+	}
 
 }

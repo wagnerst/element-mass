@@ -16,7 +16,7 @@ import java.util.List;
  * with its possible isotopes.
  *
  */
-public class Element {
+public class Element implements Comparable<Element> {
 	
 	private String name;
 	private List<Isotope> isotopes= new LinkedList<Isotope>();
@@ -223,6 +223,26 @@ public class Element {
 	@Override
 	public String toString() {
 		return "" + name;
+	}
+
+	/**
+	 * Searches in all the element constants for the element
+	 * with the given name.
+	 * @param string name of the element
+	 * @return element object
+	 */
+	public static Element getElementByName(String name) {
+		Set<Element> elements = allElements();
+		for (Element element : elements) {
+			if (element.getName().equals(name))
+				return element;
+		}
+		return null;
+	}
+
+	@Override
+	public int compareTo(Element o) {
+		return this.toString().compareTo(o.toString());
 	}
 
 }

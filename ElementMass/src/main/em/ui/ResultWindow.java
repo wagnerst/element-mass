@@ -2,13 +2,12 @@ package em.ui;
 
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import em.Element;
+import em.Molecule;
 import em.calc.Calculator;
 
 public class ResultWindow extends JFrame {
@@ -50,10 +49,8 @@ public class ResultWindow extends JFrame {
 	
 	public void update() {
 		panel.removeAll();
-		for (List<Element> l : calc.calculatePossibleElements()) {
-			for (Element e : l) {
-				panel.add(new JLabel(e.getName()));
-			}
+		for (Molecule m : calc.calculatePossibleElements()) {
+				panel.add(new JLabel(m.toString()));
 		}
 		pack();
 		setVisible(true);
