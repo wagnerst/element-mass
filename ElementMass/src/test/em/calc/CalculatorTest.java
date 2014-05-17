@@ -64,5 +64,23 @@ public class CalculatorTest {
 			assertTrue(m.toString().equals("CFe"));
 		}
 	}
+	
+	@Test
+	public void threeSelectedElements() {
+		System.out.println();
+		System.out.println("threeSelectedElements");
+		elements = new HashSet<Element>();
+		calc = new Calculator();
+		elements.add(FE);
+		elements.add(C);
+		elements.add(NI);
+		calc.setSelectedElements(elements); 
+		calc.setmByC(70);
+		Set<Molecule> result = calc.calculatePossibleElements();
+		for (Molecule m : result) {
+			assertTrue(m.toString().equals("CFe") ||
+					m.toString().equals("CNi"));
+		}
+	}
 
 }

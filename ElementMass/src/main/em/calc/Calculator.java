@@ -19,7 +19,7 @@ public class Calculator {
 	
 	private Set<Element> selectedElements;
 	private int mByC;
-	private Set<Molecule> result = new HashSet<Molecule>();
+	private static Set<Molecule> result = new HashSet<Molecule>();
 
 	/**
 	 * This method explores the complete space of possible
@@ -28,6 +28,8 @@ public class Calculator {
 	 * @return the possibleElements
 	 */
 	public Set<Molecule> calculatePossibleElements() {
+		result = new HashSet<Molecule>();
+		System.out.println("At start of calculatePossibleElements: " + result);
 		Molecule empty = new Molecule();
 		List<Isotope> selected = convertToFlatIsotopeList();
 		for (Isotope isotope : selected) {
@@ -60,7 +62,10 @@ public class Calculator {
 
 	private void foundSolution(Molecule current, Isotope isotope) {
 		current.add(isotope.getElement());
+		System.out.println("Result before: " + result);
 		result.add(current);
+		System.out.println("Solution: " + current);
+		System.out.println("Current result: " + result);
 	}
 
 	private void subtractAllIsotopeMasses(Molecule current, Isotope isotope,
