@@ -19,7 +19,8 @@ public class Calculator {
 	
 	private Set<Element> selectedElements;
 	private int mByC;
-	private static Set<Molecule> result = new HashSet<Molecule>();
+	private Set<Molecule> result = new HashSet<Molecule>();
+	private Set<RestMolecule> backlog = new HashSet<RestMolecule>();
 
 	/**
 	 * This method explores the complete space of possible
@@ -29,11 +30,39 @@ public class Calculator {
 	 */
 	public Set<Molecule> calculatePossibleElements() {
 		result = new HashSet<Molecule>();
+		backlog = new HashSet<RestMolecule>();
 		System.out.println("At start of calculatePossibleElements: " + result);
 		Molecule empty = new Molecule();
 		List<Isotope> selected = convertToFlatIsotopeList();
 		for (Isotope isotope : selected) {
-			recursiveSubtract(mByC, isotope, empty);
+			int restMass = mByC - isotope.getMass();
+			if (restMass == 0) {
+				empty = new Molecule();
+				empty.add(isotope.getElement());
+				result.add(empty);
+			} else if (restMass > 0) {
+				for (Isotope isotope2 : selected) {
+					int restMass2 = restMass - isotope2.getMass();
+					if (restMass2 == 0) {
+						empty = new Molecule();
+						empty.add(isotope.getElement());
+						empty.add(isotope2.getElement());
+						result.add(empty);
+					} else if (restMass2 > 0) {
+						for (Isotope isotope3 : selected) {
+							int restMass3 = restMass2 - isotope3.getMass();
+							if (restMass3 == 0) {
+								empty = new Molecule();
+								empty.add(isotope.getElement());
+								empty.add(isotope2.getElement());
+								empty.add(isotope3.getElement());
+							} else if (restMass3 > 0) {
+								System.out.println("There could be more solutions!");
+							}
+						}
+					}
+				}
+			}
 		}
 		System.out.println("Result: " + result);
 		return result;
