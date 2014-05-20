@@ -3,6 +3,9 @@
  */
 package em.calc;
 
+import java.util.TreeMap;
+
+import em.Element;
 import em.Molecule;
 
 /**
@@ -12,6 +15,17 @@ import em.Molecule;
 public class RestMolecule extends Molecule {
 	
 	private int rest;
+
+	public RestMolecule(Element element, int restMass) {
+		add(element);
+		rest = restMass;
+	}
+
+	public RestMolecule(RestMolecule restMolecule, Element element, int restMass) {
+		setSortedElementsMap(new TreeMap<Element, Integer>(restMolecule.getSortedElementsMap()));
+		add(element);
+		rest = restMass;
+	}
 
 	/**
 	 * @return the rest

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import em.Element;
 import em.Isotope;
@@ -20,7 +21,7 @@ public class Calculator {
 	private Set<Element> selectedElements;
 	private int mByC;
 	private Set<Molecule> result = new HashSet<Molecule>();
-	private Set<RestMolecule> backlog = new HashSet<RestMolecule>();
+	private Stack<RestMolecule> backlog = new Stack<RestMolecule>();
 
 	/**
 	 * This method explores the complete space of possible
@@ -30,42 +31,47 @@ public class Calculator {
 	 */
 	public Set<Molecule> calculatePossibleElements() {
 		result = new HashSet<Molecule>();
-		backlog = new HashSet<RestMolecule>();
+		backlog = new Stack<RestMolecule>();
 		System.out.println("At start of calculatePossibleElements: " + result);
-		Molecule empty = new Molecule();
 		List<Isotope> selected = convertToFlatIsotopeList();
-		for (Isotope isotope : selected) {
-			int restMass = mByC - isotope.getMass();
-			if (restMass == 0) {
-				empty = new Molecule();
-				empty.add(isotope.getElement());
-				result.add(empty);
-			} else if (restMass > 0) {
-				for (Isotope isotope2 : selected) {
-					int restMass2 = restMass - isotope2.getMass();
-					if (restMass2 == 0) {
-						empty = new Molecule();
-						empty.add(isotope.getElement());
-						empty.add(isotope2.getElement());
-						result.add(empty);
-					} else if (restMass2 > 0) {
-						for (Isotope isotope3 : selected) {
-							int restMass3 = restMass2 - isotope3.getMass();
-							if (restMass3 == 0) {
-								empty = new Molecule();
-								empty.add(isotope.getElement());
-								empty.add(isotope2.getElement());
-								empty.add(isotope3.getElement());
-							} else if (restMass3 > 0) {
-								System.out.println("There could be more solutions!");
-							}
-						}
-					}
+		
+		fillBacklogInitially(selected);
+		System.out.println("backlog: " + backlog);
+		
+		while (!backlog.isEmpty()) {
+			System.out.println("Backlog is not empty");
+			RestMolecule restMolecule = backlog.pop();
+			System.out.println("RestMolecule: " + restMolecule);
+			for (Isotope isotope : selected) {
+				int restMass = restMolecule.getRest() - isotope.getMass();
+				System.out.println("restMass: " + restMass);
+				if (restMass == 0) {
+					restMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
+					result.add(restMolecule);
+					System.out.println("Result: " + restMolecule);
+				} else if (restMass > 0) {
+					restMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
+					backlog.push(restMolecule);		
+					System.out.println("Push: " + restMolecule + ", " + restMass);
 				}
 			}
 		}
-		System.out.println("Result: " + result);
+		System.out.println("Final result: " + result);
 		return result;
+	}
+
+	private void fillBacklogInitially(List<Isotope> selected) {
+		for (Isotope isotope : selected) {
+			int restMass = mByC - isotope.getMass();
+			if (restMass == 0) {
+				Molecule molecule = new Molecule();
+				molecule.add(isotope.getElement());
+				result.add(molecule);
+			} else if (restMass > 0) {
+				RestMolecule restMolecule = new RestMolecule(isotope.getElement(), restMass);
+				backlog.push(restMolecule);				
+			}
+		}
 	}
 
 	private List<Isotope> convertToFlatIsotopeList() {

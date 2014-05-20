@@ -1,4 +1,4 @@
-package em;
+	package em;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +9,7 @@ import java.util.TreeMap;
  * This class represents molecules. They are the
  * result of the calculation. For our purposes, a
  * molecule is a number of elements with an amount
- * of occurences each.
+ * of occurrences each.
  *
  */
 public class Molecule {
@@ -22,6 +22,14 @@ public class Molecule {
 	public Molecule(List<Element> elementList) {
 		super();
 		buildMap(elementList);
+	}
+	
+	public SortedMap<Element, Integer>getSortedElementsMap() {
+		return elements;
+	}
+	
+	public void setSortedElementsMap(SortedMap<Element, Integer>elements) {
+		this.elements = elements;
 	}
 
 	/* (non-Javadoc)
