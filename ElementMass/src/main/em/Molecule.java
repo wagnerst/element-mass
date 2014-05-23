@@ -1,6 +1,7 @@
 	package em;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -105,6 +106,31 @@ public class Molecule {
 	@Override
 	public int hashCode() {
 		return this.toString().hashCode();
+	}
+	
+	public int getMostFrequentMass() {
+		int mostFrequentMass = 0;
+		for (Map.Entry<Element, Integer> entry : elements.entrySet()) {
+			Element element = entry.getKey();
+			int occurrences = entry.getValue().intValue();
+			mostFrequentMass += element.getMostFrequentIsotope().getMass() * occurrences;
+		}
+		return mostFrequentMass;
+	}
+
+	public boolean hasPrefix(Molecule newMolecule) {
+		SortedMap<Element, Integer> newMoleculeMap = newMolecule.getSortedElementsMap();
+		for (Element key : newMoleculeMap.keySet()) {
+			if (elements.containsKey(key)) {
+				if (!elements.get(key).equals(newMoleculeMap.get(key))) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		System.out.println("Has Prefix!");
+		return true;
 	}
 	
 	

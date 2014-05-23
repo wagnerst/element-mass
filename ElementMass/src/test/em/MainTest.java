@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class MainTest {
 
-	Main m = new Main("Test");
+	Main m = new Main();
 	
 	@Test
 	public void testElementSet() {

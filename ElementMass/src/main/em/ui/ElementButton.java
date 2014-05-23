@@ -1,12 +1,11 @@
 package em.ui;
 
-import javax.swing.JToggleButton;
+import javafx.scene.control.ToggleButton;
 
 import em.Element;
 
-public class ElementButton extends JToggleButton {
+public class ElementButton extends ToggleButton {
 	
-	private static final long serialVersionUID = 326361047940014420L;
 	private Element element;
 	
 	public ElementButton(Element h) {

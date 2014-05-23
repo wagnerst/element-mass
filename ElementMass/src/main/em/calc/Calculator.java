@@ -13,7 +13,6 @@ import em.Molecule;
 /**
  * This class is responsible for calculating the results
  * using the selected elements and the M/C value.
- * @author wagnerst
  *
  */
 public class Calculator {
@@ -33,16 +32,20 @@ public class Calculator {
 		result = new HashSet<Molecule>();
 		backlog = new Stack<RestMolecule>();
 		System.out.println("At start of calculatePossibleElements: " + result);
+		System.out.println("mByC: " + mByC);
+		System.out.println("Selected: " + selectedElements);
 		List<Isotope> selected = convertToFlatIsotopeList();
 		
 		fillBacklogInitially(selected);
 		System.out.println("backlog: " + backlog);
 		
 		while (!backlog.isEmpty()) {
-			System.out.println("Backlog is not empty");
+			System.out.println("Backlog: " + backlog);
 			RestMolecule restMolecule = backlog.pop();
 			System.out.println("RestMolecule: " + restMolecule);
 			for (Isotope isotope : selected) {
+				System.out.println("Test element: " + isotope.getElement());
+				System.out.println("Isotope mass: " + isotope.getMass());
 				int restMass = restMolecule.getRest() - isotope.getMass();
 				System.out.println("restMass: " + restMass);
 				if (restMass == 0) {
@@ -50,14 +53,31 @@ public class Calculator {
 					result.add(restMolecule);
 					System.out.println("Result: " + restMolecule);
 				} else if (restMass > 0) {
-					restMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
-					backlog.push(restMolecule);		
-					System.out.println("Push: " + restMolecule + ", " + restMass);
+					RestMolecule newRestMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
+					if (notContainedAsPrefix(newRestMolecule)) {
+						backlog.push(newRestMolecule);
+						System.out.println("Push: " + newRestMolecule + ", " + restMass);
+					}
+					
 				}
 			}
 		}
 		System.out.println("Final result: " + result);
 		return result;
+	}
+
+	private boolean notContainedAsPrefix(Molecule newMolecule) {
+		for (Molecule molecule : result) {
+			if (molecule.hasPrefix(newMolecule)) {
+				return false;
+			}
+		}
+		for (Molecule molecule : backlog) {
+			if (molecule.hasPrefix(newMolecule)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void fillBacklogInitially(List<Isotope> selected) {

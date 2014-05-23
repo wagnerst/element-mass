@@ -13,7 +13,7 @@ import em.Molecule;
  * It is only used in the calculation.
  */
 public class RestMolecule extends Molecule {
-	
+
 	private int rest;
 
 	public RestMolecule(Element element, int restMass) {
