@@ -201,18 +201,7 @@ public class Element implements Comparable<Element> {
 	public String getName() {
 		return name;
 	}
-
-	private void setMostFrequentIsotope(int isotopeMass) {
-		setMostFrequentIsotope(new Isotope(this, isotopeMass));
-	}
 	
-	private void setMostFrequentIsotope(Isotope isotope) {
-		this.mostFrequentIsotope = isotope;
-		if (!isotopes.contains(mostFrequentIsotope)) {
-			isotopes.add(isotope);
-		}
-	}
-
 	public Isotope getMostFrequentIsotope() {
 		return this.mostFrequentIsotope;
 	}
@@ -222,7 +211,7 @@ public class Element implements Comparable<Element> {
 	 */
 	@Override
 	public String toString() {
-		return "" + name;
+		return name;
 	}
 
 	/**
@@ -243,6 +232,17 @@ public class Element implements Comparable<Element> {
 	@Override
 	public int compareTo(Element o) {
 		return this.toString().compareTo(o.toString());
+	}
+
+	private void setMostFrequentIsotope(int isotopeMass) {
+		setMostFrequentIsotope(new Isotope(this, isotopeMass));
+	}
+	
+	private void setMostFrequentIsotope(Isotope isotope) {
+		this.mostFrequentIsotope = isotope;
+		if (!isotopes.contains(mostFrequentIsotope)) {
+			isotopes.add(isotope);
+		}
 	}
 
 }

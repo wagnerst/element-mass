@@ -21,8 +21,13 @@ public class Molecule {
 	}
 	
 	public Molecule(List<Element> elementList) {
-		super();
 		buildMap(elementList);
+	}
+	
+	private void buildMap(List<Element> elementList) {
+		for (Element element : elementList) {
+			add(element);
+		}
 	}
 	
 	public SortedMap<Element, Integer>getSortedElementsMap() {
@@ -49,12 +54,10 @@ public class Molecule {
 		return sb.toString();
 	}
 
-	private void buildMap(List<Element> elementList) {
-		for (Element element : elementList) {
-			add(element);
-		}
-	}
-
+	/**
+	 * @param element
+	 * @return whether the given element is already in the molecule
+	 */
 	public boolean contains(Element element) {
 		return this.elements.containsKey(element);
 	}
@@ -118,6 +121,10 @@ public class Molecule {
 		return mostFrequentMass;
 	}
 
+	/**
+	 * @param newMolecule
+	 * @return if the new molecule is a prefix of this molecule
+	 */
 	public boolean hasPrefix(Molecule newMolecule) {
 		SortedMap<Element, Integer> newMoleculeMap = newMolecule.getSortedElementsMap();
 		for (Element key : newMoleculeMap.keySet()) {
@@ -129,7 +136,6 @@ public class Molecule {
 				return false;
 			}
 		}
-		System.out.println("Has Prefix!");
 		return true;
 	}
 	

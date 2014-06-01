@@ -2,7 +2,6 @@ package em;
 
 /**
  * An isotope of an element
- * @author wagnerst
  *
  */
 public class Isotope {

@@ -21,42 +21,35 @@ public class Calculator {
 	private int mByC;
 	private Set<Molecule> result = new HashSet<Molecule>();
 	private Stack<RestMolecule> backlog = new Stack<RestMolecule>();
-
+	
 	/**
 	 * This method explores the complete space of possible
 	 * isotope combinations from the isotopes of the elements
 	 * set as selected elements fitting in mByC.
 	 * @return the possibleElements
 	 */
-	public Set<Molecule> calculatePossibleElements() {
+	public Set<Molecule> calculatePossibleElements(Set<Element> selectedElements,
+			int mByC) {
+		this.selectedElements = selectedElements;
+		this.mByC = mByC;
 		result = new HashSet<Molecule>();
 		backlog = new Stack<RestMolecule>();
-		System.out.println("At start of calculatePossibleElements: " + result);
-		System.out.println("mByC: " + mByC);
-		System.out.println("Selected: " + selectedElements);
 		List<Isotope> selected = convertToFlatIsotopeList();
 		
 		fillBacklogInitially(selected);
-		System.out.println("backlog: " + backlog);
 		
 		while (!backlog.isEmpty()) {
-			System.out.println("Backlog: " + backlog);
 			RestMolecule restMolecule = backlog.pop();
-			System.out.println("RestMolecule: " + restMolecule);
+//			fillBacklog(selected, restMolecule.getRest(), restMolecule);
 			for (Isotope isotope : selected) {
-				System.out.println("Test element: " + isotope.getElement());
-				System.out.println("Isotope mass: " + isotope.getMass());
 				int restMass = restMolecule.getRest() - isotope.getMass();
-				System.out.println("restMass: " + restMass);
 				if (restMass == 0) {
 					restMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
 					result.add(restMolecule);
-					System.out.println("Result: " + restMolecule);
 				} else if (restMass > 0) {
 					RestMolecule newRestMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
 					if (notContainedAsPrefix(newRestMolecule)) {
 						backlog.push(newRestMolecule);
-						System.out.println("Push: " + newRestMolecule + ", " + restMass);
 					}
 					
 				}
@@ -81,14 +74,20 @@ public class Calculator {
 	}
 
 	private void fillBacklogInitially(List<Isotope> selected) {
+		fillBacklog(selected, mByC, new RestMolecule());
+	}
+	
+	private void fillBacklog(List<Isotope> selected, int currentMass, 
+			RestMolecule existingRestMolecule) {
 		for (Isotope isotope : selected) {
-			int restMass = mByC - isotope.getMass();
+			int restMass = currentMass - isotope.getMass();
 			if (restMass == 0) {
 				Molecule molecule = new Molecule();
 				molecule.add(isotope.getElement());
 				result.add(molecule);
 			} else if (restMass > 0) {
-				RestMolecule restMolecule = new RestMolecule(isotope.getElement(), restMass);
+				RestMolecule restMolecule = new RestMolecule(existingRestMolecule, 
+						isotope.getElement(), restMass);
 				backlog.push(restMolecule);				
 			}
 		}
@@ -100,65 +99,6 @@ public class Calculator {
 			isotopes.addAll(element.getIsotopes());
 		}
 		return isotopes;
-	}
-
-	private void recursiveSubtract(int in, Isotope isotope, 
-			Molecule current) {
-		int newIn = in - isotope.getMass();
-		if (newIn > 0) {
-			subtractAllIsotopeMasses(current, isotope, newIn);	
-		} else if (newIn == 0) {
-			System.out.println("Isotope: " + isotope + " of " + isotope.getElement());
-			System.out.println("Current: " + current);
-			System.out.println("in: " + in + ", newIn: " + newIn);
-			foundSolution(current, isotope);		
-		}
-	}
-
-	private void foundSolution(Molecule current, Isotope isotope) {
-		current.add(isotope.getElement());
-		System.out.println("Result before: " + result);
-		result.add(current);
-		System.out.println("Solution: " + current);
-		System.out.println("Current result: " + result);
-	}
-
-	private void subtractAllIsotopeMasses(Molecule current, Isotope isotope,
-			int rest) {
-		current.add(isotope.getElement());
-		List<Isotope> selected = convertToFlatIsotopeList();
-		for (Isotope nextIsotope : selected) {
-			recursiveSubtract(rest, nextIsotope, current);
-		}
-		current.remove(isotope.getElement());
-	}
-
-	/**
-	 * @param selectedElements the elements to set
-	 */
-	public void setSelectedElements(Set<Element> selectedElements) {
-		this.selectedElements = selectedElements;
-	}
-
-	/**
-	 * @return the selected elements
-	 */
-	public Set<Element> getSelectedElements() {
-		return selectedElements;
-	}
-
-	/**
-	 * @return the mByC
-	 */
-	public double getmByC() {
-		return mByC;
-	}
-
-	/**
-	 * @param mByC the mByC to set
-	 */
-	public void setmByC(int mByC) {
-		this.mByC = mByC;
 	}
 	
 }

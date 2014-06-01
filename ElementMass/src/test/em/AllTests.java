@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import em.calc.*;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ElementTest.class, IsotopeTest.class, MainTest.class, 
+@SuiteClasses({ ElementTest.class, IsotopeTest.class, 
 	CalculatorTest.class, MoleculeTest.class })
 public class AllTests {
 

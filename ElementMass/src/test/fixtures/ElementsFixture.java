@@ -24,9 +24,7 @@ public class ElementsFixture extends ColumnFixture {
 	
 	public String calculateElements() {
 		Calculator calc = new Calculator();
-		calc.setmByC(parseMByC());
-		calc.setSelectedElements(parseElements());
-		Set<Molecule> possibleElements = calc.calculatePossibleElements();
+		Set<Molecule> possibleElements = calc.calculatePossibleElements(parseElements(), parseMByC());
 		return elements2String(possibleElements);
 	}
 	

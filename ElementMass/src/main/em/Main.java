@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -94,9 +95,12 @@ public class Main extends Application {
 		 textGrid.add(mByCLabel, 0, 1);
 		 mByCTextField = new TextField();
 		 textGrid.add(this.mByCTextField, 1, 1);
+		 mByCTextField.setOnAction(event -> setUpCalculatePrint());
+		 mByCTextField.setOnKeyTyped(event -> startCalculationKeyPressed(event));
 
 		 Button btn = new Button("Calculate");
 		 textGrid.add(btn, 2, 1);
+		 
 		 border.setCenter(textGrid);
 		 
 		 btn.setOnAction(event -> setUpCalculatePrint());
@@ -126,23 +130,22 @@ public class Main extends Application {
 	}
 	
 	private Set<Element> findSelectedElements() {
-			Set<Element> elements = new HashSet<Element>();
-			for (ElementButton eb : periodicTable.getButtonList()) {
-				if (eb.isSelected()) {
-					elements.add(eb.getElement());
-				}
+		Set<Element> elements = new HashSet<Element>();
+		for (ElementButton eb : periodicTable.getButtonList()) {
+			if (eb.isSelected()) {
+				elements.add(eb.getElement());
 			}
-			return elements;
+		}
+		return elements;
+	}
+	
+	private void startCalculationKeyPressed(Event event) {
+		
 	}
 
 	private void setUpCalculatePrint() {
-		setUpCalculator();
-		printResult(calc.calculatePossibleElements());
-	}
-	
-	private void setUpCalculator() {
-		calc.setSelectedElements(findSelectedElements());
-		calc.setmByC(Integer.parseInt(mByCTextField.getText()));
+		printResult(calc.calculatePossibleElements(findSelectedElements(),
+				Integer.parseInt(mByCTextField.getText())));
 	}
 
 	private void printResult(Set<Molecule> possibleElements) {

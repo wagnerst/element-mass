@@ -18,38 +18,23 @@ public class CalculatorTest {
 	private Calculator calc = new Calculator();
 	private Set<Element> elements = new HashSet<Element>();
 	
-	@Test
-	public void testOutputSelectedMasses() {
-		elements.add(BE);
-		calc.setSelectedElements(elements);
-		assertTrue(elements.equals(calc.getSelectedElements()));
-	}
-	
-	@Test
-	public void testReturnMByC() {
-		calc.setmByC(2);
-		assertTrue(2 == calc.getmByC());
-	}
-	
 	@Before
 	public void setup() {
 		elements = new HashSet<Element>();
 		calc = new Calculator();
 		elements.add(FE);
 		elements.add(C);
-		calc.setSelectedElements(elements); 
-		calc.setmByC(68);
 	}
 	
 	@Test
 	public void testCalculatePossibleElementsNotEmpty() {
-		Set<Molecule> result = calc.calculatePossibleElements();
+		Set<Molecule> result = calc.calculatePossibleElements(elements, 68);
 		assertFalse(result.isEmpty());
 	}
 	
 	@Test
 	public void testCalculatePossibleElementsContainsElements() {
-		Set<Molecule> result = calc.calculatePossibleElements();
+		Set<Molecule> result = calc.calculatePossibleElements(elements, 68);
 		for (Molecule m : result) {
 			assertTrue(m.contains(FE));
 			assertTrue(m.contains(C));
@@ -59,7 +44,7 @@ public class CalculatorTest {
 	
 	@Test
 	public void testCalculatePossibleElementsExactly() {
-		Set<Molecule> result = calc.calculatePossibleElements();
+		Set<Molecule> result = calc.calculatePossibleElements(elements, 68);
 		for (Molecule m : result) {
 			assertTrue(m.toString().equals("CFe"));
 		}
@@ -74,9 +59,7 @@ public class CalculatorTest {
 		elements.add(FE);
 		elements.add(C);
 		elements.add(NI);
-		calc.setSelectedElements(elements); 
-		calc.setmByC(70);
-		Set<Molecule> result = calc.calculatePossibleElements();
+		Set<Molecule> result = calc.calculatePossibleElements(elements, 70);
 		for (Molecule m : result) {
 			assertTrue(m.toString().equals("CFe") ||
 					m.toString().equals("CNi"));

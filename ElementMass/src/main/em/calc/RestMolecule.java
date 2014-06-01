@@ -15,6 +15,11 @@ import em.Molecule;
 public class RestMolecule extends Molecule {
 
 	private int rest;
+	
+	public RestMolecule() {
+		super();
+		rest = 0;
+	}
 
 	public RestMolecule(Element element, int restMass) {
 		add(element);
@@ -40,7 +45,5 @@ public class RestMolecule extends Molecule {
 	public void setRest(int rest) {
 		this.rest = rest;
 	}
-	
-	
 
 }
