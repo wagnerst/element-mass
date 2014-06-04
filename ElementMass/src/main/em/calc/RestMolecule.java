@@ -3,9 +3,9 @@
  */
 package em.calc;
 
-import java.util.TreeMap;
+import java.util.List;
 
-import em.Element;
+import em.Isotope;
 import em.Molecule;
 
 /**
@@ -21,14 +21,13 @@ public class RestMolecule extends Molecule {
 		rest = 0;
 	}
 
-	public RestMolecule(Element element, int restMass) {
-		add(element);
+	public RestMolecule(Isotope isotope, int restMass) {
+		add(isotope);
 		rest = restMass;
 	}
 
-	public RestMolecule(RestMolecule restMolecule, Element element, int restMass) {
-		setSortedElementsMap(new TreeMap<Element, Integer>(restMolecule.getSortedElementsMap()));
-		add(element);
+	public RestMolecule(List<Isotope> isotopes, int restMass) {
+		setIsotopes(isotopes);
 		rest = restMass;
 	}
 

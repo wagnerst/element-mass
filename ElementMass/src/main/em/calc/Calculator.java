@@ -43,10 +43,15 @@ public class Calculator {
 			for (Isotope isotope : selected) {
 				int restMass = restMolecule.getRest() - isotope.getMass();
 				if (restMass == 0) {
-					restMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
-					result.add(restMolecule);
+					List<Isotope> isotopeList = new LinkedList<Isotope>(); 
+					isotopeList.addAll(restMolecule.getIsotopes());
+					isotopeList.add(isotope);
+					result.add(new Molecule(isotopeList));
 				} else if (restMass > 0) {
-					RestMolecule newRestMolecule = new RestMolecule(restMolecule, isotope.getElement(), restMass);
+					List<Isotope> isotopeList = new LinkedList<Isotope>(); 
+					isotopeList.addAll(restMolecule.getIsotopes());
+					isotopeList.add(isotope);
+					RestMolecule newRestMolecule = new RestMolecule(isotopeList, restMass);
 					if (notContainedAsPrefix(newRestMolecule)) {
 						backlog.push(newRestMolecule);
 					}
@@ -82,12 +87,14 @@ public class Calculator {
 			int restMass = currentMass - isotope.getMass();
 			if (restMass == 0) {
 				Molecule molecule = new Molecule();
-				molecule.add(isotope.getElement());
+				molecule.add(isotope);
 				result.add(molecule);
 			} else if (restMass > 0) {
-				RestMolecule restMolecule = new RestMolecule(existingRestMolecule, 
-						isotope.getElement(), restMass);
-				backlog.push(restMolecule);				
+				List<Isotope> isotopeList = new LinkedList<Isotope>(); 
+				isotopeList.addAll(existingRestMolecule.getIsotopes());
+				isotopeList.add(isotope);
+				RestMolecule restMolecule = new RestMolecule(isotopeList, restMass);
+				backlog.push(restMolecule);
 			}
 		}
 	}

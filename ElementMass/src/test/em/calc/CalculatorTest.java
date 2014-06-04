@@ -33,16 +33,6 @@ public class CalculatorTest {
 	}
 	
 	@Test
-	public void testCalculatePossibleElementsContainsElements() {
-		Set<Molecule> result = calc.calculatePossibleElements(elements, 68);
-		for (Molecule m : result) {
-			assertTrue(m.contains(FE));
-			assertTrue(m.contains(C));
-			assertFalse(m.contains(UUO));
-		}
-	}
-	
-	@Test
 	public void testCalculatePossibleElementsExactly() {
 		Set<Molecule> result = calc.calculatePossibleElements(elements, 68);
 		for (Molecule m : result) {

@@ -3,10 +3,8 @@ package em;
 import static org.junit.Assert.*;
 import static em.Element.*;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,11 +15,11 @@ public class MoleculeTest {
 	
 	@Before
 	public void setupMolecule() {
-		List<Element> elementList = new LinkedList<Element>();
-		elementList.add(H);
-		elementList.add(H);
-		elementList.add(O);
-		molecule = new Molecule(elementList);
+		List<Isotope> isotopeList = new LinkedList<Isotope>();
+		isotopeList.add(H.getMostFrequentIsotope());
+		isotopeList.add(H.getMostFrequentIsotope());
+		isotopeList.add(O.getMostFrequentIsotope());
+		molecule = new Molecule(isotopeList);
 	}
 
 	@Test
@@ -31,22 +29,22 @@ public class MoleculeTest {
 	
 	@Test 
 	public void testAdd() {
-		molecule.add(O);
+		molecule.add(O.getMostFrequentIsotope());
 		assertTrue(molecule.toString().equals("H2O2"));
 	}
 	
-	@Test 
-	public void testRemove() {
-		molecule.remove(H);
-		assertTrue(molecule.toString().equals("HO"));
+	@Test
+	public void testHasPrefix() {
+		List<Isotope> shorterIsotopeList = new LinkedList<Isotope>();
+		shorterIsotopeList.add(H.getMostFrequentIsotope());
+		shorterIsotopeList.add(H.getMostFrequentIsotope());
+		Molecule prefix = new Molecule(shorterIsotopeList);
+		assertTrue(molecule.hasPrefix(prefix));
 	}
 	
 	@Test
-	public void testGetElements() {
-		Set<Element> elementSet = new HashSet<Element>();
-		elementSet.add(H);
-		elementSet.add(O);
-		assertTrue(molecule.getElements().equals(elementSet));
+	public void getMostFrequentMass() {
+		assertTrue(molecule.getMostFrequentMass() == 18);
 	}
 	
 	

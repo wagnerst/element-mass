@@ -30,16 +30,6 @@ public class ElementsFixture extends ColumnFixture {
 	
 	private String elements2String(Set<Molecule> possibleElements) {
 		StringBuffer buffer = new StringBuffer();
-		for (Molecule molecule : possibleElements) {
-			int mass = 0;
-			for (Element e : molecule.getElements()) {
-				buffer.append(e.getName());
-				mass += e.getMostFrequentIsotope().getMass();
-			}
-			buffer.append(", " + mass + "; ");
-		}
-		int lastSemicolonIndex = buffer.lastIndexOf("; ");
-		buffer.delete(lastSemicolonIndex, lastSemicolonIndex+1);
 		return buffer.toString().trim();
 	}
 
