@@ -40,7 +40,6 @@ public class Calculator {
 		
 		while (!backlog.isEmpty()) {
 			RestMolecule restMolecule = backlog.pop();
-//			fillBacklog(selected, restMolecule.getRest(), restMolecule);
 			for (Isotope isotope : selected) {
 				int restMass = restMolecule.getRest() - isotope.getMass();
 				if (restMass == 0) {

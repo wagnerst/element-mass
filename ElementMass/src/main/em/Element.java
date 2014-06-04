@@ -21,6 +21,7 @@ public class Element implements Comparable<Element> {
 	private String name;
 	private List<Isotope> isotopes= new LinkedList<Isotope>();
 	private Isotope mostFrequentIsotope;
+	private Isotope activeIsotope;
 	
 	public static final Element H = new Element("H", 1, 2);
 	public static final Element HE = new Element("He", 4, 3);
@@ -206,14 +207,6 @@ public class Element implements Comparable<Element> {
 		return this.mostFrequentIsotope;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return name;
-	}
-
 	/**
 	 * Searches in all the element constants for the element
 	 * with the given name.
@@ -229,11 +222,6 @@ public class Element implements Comparable<Element> {
 		return null;
 	}
 
-	@Override
-	public int compareTo(Element o) {
-		return this.toString().compareTo(o.toString());
-	}
-
 	private void setMostFrequentIsotope(int isotopeMass) {
 		setMostFrequentIsotope(new Isotope(this, isotopeMass));
 	}
@@ -243,6 +231,19 @@ public class Element implements Comparable<Element> {
 		if (!isotopes.contains(mostFrequentIsotope)) {
 			isotopes.add(isotope);
 		}
+	}
+	
+	@Override
+	public int compareTo(Element o) {
+		return this.toString().compareTo(o.toString());
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }
