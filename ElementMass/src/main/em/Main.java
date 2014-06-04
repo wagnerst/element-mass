@@ -16,6 +16,7 @@
 package em;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javafx.application.Application;
@@ -86,6 +87,10 @@ public class Main extends Application {
 		GridPane elementGrid = setUpGridPane();
 		 setSceneTitle(elementGrid);
 		 periodicTable.createElementButtons(elementGrid);
+		 List<ElementButton> buttonList = periodicTable.getButtonList();
+		 for (ElementButton eb : buttonList) {
+			 eb.setOnAction(event -> setUpCalculatePrint());
+		 }
 		 border.setTop(elementGrid);
 	}
 	
@@ -110,8 +115,7 @@ public class Main extends Application {
 		 textGrid.add(mByCLabel, 0, 1);
 		 mByCTextField = new TextField();
 		 textGrid.add(this.mByCTextField, 1, 1);
-		 mByCTextField.setOnAction(event -> setUpCalculatePrint());
-		 mByCTextField.setOnKeyTyped(event -> startCalculationKeyPressed(event));
+		 mByCTextField.setOnKeyReleased(event -> setUpCalculatePrint());
 
 		 Button btn = new Button("Calculate");
 		 textGrid.add(btn, 2, 1);
@@ -152,10 +156,6 @@ public class Main extends Application {
 			}
 		}
 		return elements;
-	}
-	
-	private void startCalculationKeyPressed(Event event) {
-		
 	}
 
 	private void setUpCalculatePrint() {
