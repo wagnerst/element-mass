@@ -20,11 +20,9 @@ import java.util.List;
 import java.util.Set;
 
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -116,13 +114,8 @@ public class Main extends Application {
 		 mByCTextField = new TextField();
 		 textGrid.add(this.mByCTextField, 1, 1);
 		 mByCTextField.setOnKeyReleased(event -> setUpCalculatePrint());
-
-		 Button btn = new Button("Calculate");
-		 textGrid.add(btn, 2, 1);
 		 
 		 border.setCenter(textGrid);
-		 
-		 btn.setOnAction(event -> setUpCalculatePrint());
 	}
 	
 	private void setUpResultBox(BorderPane border) {
