@@ -21,13 +21,18 @@ import java.util.List;
 import java.util.Set;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -37,6 +42,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import em.calc.Calculator;
 import em.ui.ElementButton;
+import em.ui.MoleculeModel;
 import em.ui.PeriodicTable;
 
 /**
@@ -52,6 +58,7 @@ public class Main extends Application {
 	private Calculator calc = new Calculator();
 	private TextField mByCTextField;
 	private VBox resultBox;
+	TableView<MoleculeModel> table = new TableView<MoleculeModel>();
 	
 	/**
 	 * Only launches the JavaFX window.
@@ -122,10 +129,19 @@ public class Main extends Application {
 	
 	private void setUpResultBox(BorderPane border) {
 		resultBox = new VBox();
-		 resultBox.setPadding(new Insets(30));
-		 resultBox.setSpacing(8);
-		 resultBox.setAlignment(Pos.CENTER_LEFT);
-	     border.setBottom(resultBox);
+		resultBox.setPadding(new Insets(30));
+		resultBox.setSpacing(8);
+		resultBox.setAlignment(Pos.CENTER_LEFT);
+		TableColumn<MoleculeModel,String> nameCol = new TableColumn<MoleculeModel,String>("Molecule");
+		nameCol.setCellValueFactory(new PropertyValueFactory<MoleculeModel,String>("name"));
+		     
+		TableColumn<MoleculeModel,String> massCol = new TableColumn<MoleculeModel,String>("Mass of most frequent isotopes");
+		massCol.setCellValueFactory(new PropertyValueFactory<MoleculeModel,String>("mass"));
+		
+		table.getColumns().setAll(nameCol, massCol);
+		
+	    border.setBottom(resultBox);
+	    border.setBottom(table);
 	}
 
 	private void setUpSceneAndShowStage(Stage primaryStage, ScrollPane sp) {
@@ -156,13 +172,16 @@ public class Main extends Application {
 	private void calculateAndPrintResults() {
 		Set<Molecule> resultMolecules = calc.calculatePossibleElements(findSelectedElements(),
 				extractMByC());
-		resultBox.getChildren().clear();
 		List<Molecule> moleculeList = new ArrayList<Molecule>(resultMolecules);
 		moleculeList.sort(new MoleculeMassSorter());
+		List<MoleculeModel> beanList = new ArrayList<MoleculeModel>();
 		for (Molecule molecule : moleculeList) {
-			resultBox.getChildren().add(new Text(molecule.toString() +
-					", " + molecule.getMostFrequentMass()));
+			MoleculeModel mm = new MoleculeModel(molecule.toString(), 
+					new Integer(molecule.getMostFrequentMass()).toString());
+			beanList.add(mm);	
 		}
+		ObservableList<MoleculeModel> obsMolecules = FXCollections.observableArrayList(beanList);
+		table.setItems(obsMolecules);
 	}
 
 	private int extractMByC() {
