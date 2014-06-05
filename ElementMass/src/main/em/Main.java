@@ -15,6 +15,7 @@
 */
 package em;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,7 +88,7 @@ public class Main extends Application {
 		 periodicTable.createElementButtons(elementGrid);
 		 List<ElementButton> buttonList = periodicTable.getButtonList();
 		 for (ElementButton eb : buttonList) {
-			 eb.setOnAction(event -> setUpCalculatePrint());
+			 eb.setOnAction(event -> calculateAndPrintResults());
 		 }
 		 border.setTop(elementGrid);
 	}
@@ -112,8 +113,9 @@ public class Main extends Application {
 		 Label mByCLabel = new Label("m/c:");
 		 textGrid.add(mByCLabel, 0, 1);
 		 mByCTextField = new TextField();
+		 mByCTextField.setPromptText("0");
 		 textGrid.add(this.mByCTextField, 1, 1);
-		 mByCTextField.setOnKeyReleased(event -> setUpCalculatePrint());
+		 mByCTextField.setOnKeyReleased(event -> calculateAndPrintResults());
 		 
 		 border.setCenter(textGrid);
 	}
@@ -128,9 +130,9 @@ public class Main extends Application {
 
 	private void setUpSceneAndShowStage(Stage primaryStage, ScrollPane sp) {
 		Scene scene = new Scene(sp, 1000, 700);
-		 primaryStage.setTitle("ElementMass");
-		 primaryStage.setScene(scene);
-		 primaryStage.show();
+		primaryStage.setTitle("ElementMass");
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 
 	private ScrollPane setUpScrollPane(BorderPane border) {
@@ -151,17 +153,25 @@ public class Main extends Application {
 		return elements;
 	}
 
-	private void setUpCalculatePrint() {
-		printResult(calc.calculatePossibleElements(findSelectedElements(),
-				Integer.parseInt(mByCTextField.getText())));
-	}
-
-	private void printResult(Set<Molecule> possibleElements) {
+	private void calculateAndPrintResults() {
+		Set<Molecule> resultMolecules = calc.calculatePossibleElements(findSelectedElements(),
+				extractMByC());
 		resultBox.getChildren().clear();
-		for (Molecule molecule : possibleElements) {
+		List<Molecule> moleculeList = new ArrayList<Molecule>(resultMolecules);
+		moleculeList.sort(new MoleculeMassSorter());
+		for (Molecule molecule : moleculeList) {
 			resultBox.getChildren().add(new Text(molecule.toString() +
 					", " + molecule.getMostFrequentMass()));
 		}
+	}
+
+	private int extractMByC() {
+		String inputText = mByCTextField.getText();
+		int inputMByC = 0; 
+		if (!inputText.trim().isEmpty()) {
+			inputMByC = Integer.parseInt(inputText);
+		}
+		return inputMByC;
 	}
 
 }
