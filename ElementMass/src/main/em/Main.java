@@ -77,7 +77,7 @@ public class Main extends Application {
 	 public void start(Stage primaryStage) throws Exception {	
 		 BorderPane border = new BorderPane();
 		 setUpPeriodicTable(border);
-		 addInputFieldAndButton(border);
+		 addInputField(border);
 		 setUpResultBox(border);
 		 setUpSceneAndShowStage(primaryStage, setUpScrollPane(border));
 	}
@@ -108,7 +108,7 @@ public class Main extends Application {
 		 elementGrid.add(scenetitle, 0, 0, 2, 1);
 	}
 	
-	private void addInputFieldAndButton(BorderPane border) {
+	private void addInputField(BorderPane border) {
 		GridPane textGrid = setUpGridPane();
 		 Label mByCLabel = new Label("m/c:");
 		 textGrid.add(mByCLabel, 0, 1);
