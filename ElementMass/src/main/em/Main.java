@@ -128,19 +128,17 @@ public class Main extends Application {
 	}
 	
 	private void setUpResultBox(BorderPane border) {
-		resultBox = new VBox();
-		resultBox.setPadding(new Insets(30));
-		resultBox.setSpacing(8);
-		resultBox.setAlignment(Pos.CENTER_LEFT);
 		TableColumn<MoleculeModel,String> nameCol = new TableColumn<MoleculeModel,String>("Molecule");
 		nameCol.setCellValueFactory(new PropertyValueFactory<MoleculeModel,String>("name"));
-		     
+		nameCol.setPrefWidth(100.0);
+
 		TableColumn<MoleculeModel,String> massCol = new TableColumn<MoleculeModel,String>("Mass of most frequent isotopes");
 		massCol.setCellValueFactory(new PropertyValueFactory<MoleculeModel,String>("mass"));
+		massCol.setPrefWidth(300.0);
 		
 		table.getColumns().setAll(nameCol, massCol);
+		table.setMaxWidth(400);
 		
-	    border.setBottom(resultBox);
 	    border.setBottom(table);
 	}
 
