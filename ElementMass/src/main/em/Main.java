@@ -35,6 +35,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -85,19 +87,19 @@ public class Main extends Application {
 		 BorderPane border = new BorderPane();
 		 setUpPeriodicTable(border);
 		 addInputField(border);
-		 setUpResultBox(border);
+		 setUpResultTable(border);
 		 setUpSceneAndShowStage(primaryStage, setUpScrollPane(border));
 	}
 
 	private void setUpPeriodicTable(BorderPane border) {
 		GridPane elementGrid = setUpGridPane();
-		 setSceneTitle(elementGrid);
-		 periodicTable.createElementButtons(elementGrid);
-		 List<ElementButton> buttonList = periodicTable.getButtonList();
-		 for (ElementButton eb : buttonList) {
-			 eb.setOnAction(event -> calculateAndPrintResults());
-		 }
-		 border.setTop(elementGrid);
+		setSceneTitle(elementGrid);
+		periodicTable.createElementButtons(elementGrid);
+		List<ElementButton> buttonList = periodicTable.getButtonList();
+		for (ElementButton eb : buttonList) {
+			eb.setOnAction(event -> calculateAndPrintResults());
+		}
+		border.setTop(elementGrid);
 	}
 	
 	private GridPane setUpGridPane() {
@@ -127,7 +129,7 @@ public class Main extends Application {
 		 border.setCenter(textGrid);
 	}
 	
-	private void setUpResultBox(BorderPane border) {
+	private void setUpResultTable(BorderPane border) {
 		TableColumn<MoleculeModel,String> nameCol = new TableColumn<MoleculeModel,String>("Molecule");
 		nameCol.setCellValueFactory(new PropertyValueFactory<MoleculeModel,String>("name"));
 		nameCol.setPrefWidth(100.0);
@@ -137,9 +139,12 @@ public class Main extends Application {
 		massCol.setPrefWidth(300.0);
 		
 		table.getColumns().setAll(nameCol, massCol);
-		table.setMaxWidth(400);
+		table.setMaxWidth(402);
 		
-	    border.setBottom(table);
+		StackPane resultPane = new StackPane();
+		resultPane.getChildren().add(table);
+		StackPane.setAlignment(table, Pos.BOTTOM_CENTER);
+		border.setBottom(resultPane);		
 	}
 
 	private void setUpSceneAndShowStage(Stage primaryStage, ScrollPane sp) {
