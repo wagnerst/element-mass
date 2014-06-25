@@ -55,7 +55,7 @@ public class Element implements Comparable<Element> {
 	public static final Element K = new Element("K", 39, 40, 41);
 	public static final Element CA = new Element("Ca", 40, 42, 43, 44, 46, 48);
 	public static final Element SC = new Element("Sc", 45);
-	public static final Element TI = new Element("Ti", 46, 47, 48, 49, 50);
+	public static final Element TI = new Element("Ti", 48, 46, 47, 49, 50);
 	public static final Element V = new Element("V", 51, 50);
 	public static final Element CR = new Element("Cr", 52, 50, 53, 54);
 	public static final Element MN = new Element("Mn", 55);
