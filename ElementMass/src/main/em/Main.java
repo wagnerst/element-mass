@@ -35,9 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -59,7 +57,6 @@ public class Main extends Application {
 	private PeriodicTable periodicTable = new PeriodicTable();
 	private Calculator calc = new Calculator();
 	private TextField mByCTextField;
-	private VBox resultBox;
 	TableView<MoleculeModel> table = new TableView<MoleculeModel>();
 	
 	/**

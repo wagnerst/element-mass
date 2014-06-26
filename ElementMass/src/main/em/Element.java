@@ -34,6 +34,7 @@ public class Element implements Comparable<Element> {
 	private List<Isotope> isotopes= new LinkedList<Isotope>();
 	private Isotope mostFrequentIsotope;
 
+	
 	public static final Element H = new Element("H", 1, 2);
 	public static final Element HE = new Element("He", 4, 3);
 	public static final Element LI = new Element("Li", 7, 6);
